@@ -8,7 +8,7 @@ const contactsPath = path.resolve("db", "contacts.json");
 const updateContacts = (contacts) =>
   fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 
-export async function getAllContacts() {
+export async function listContacts() {
   try {
     const { encoding } = await DetectFileEncodingAndLanguage(contactsPath);
     const contactsData = await fs.readFile(contactsPath, encoding);
@@ -24,14 +24,17 @@ export async function getAllContacts() {
   }
 }
 
-export async function getOneContact(contactId) {
-  const contacts = await getAllContacts();
+
+export async function getContactById(contactId) {
+  const contacts = await listContacts();
+  
   const result = contacts.find((item) => item.id === contactId);
   return result || null;
 }
 
-export async function createContact(data) {
-  const contacts = await getAllContacts();
+
+export async function addContact(data) {
+  const contacts = await listContacts();
 
   const newContact = {
     id: nanoid(),
@@ -46,7 +49,7 @@ export async function createContact(data) {
 }
 
 export async function updateContact(contactId, data) {
-  const contacts = await getAllContacts();
+  const contacts = await listContacts();
   const index = contacts.findIndex((item) => item.id === contactId);
   if (index === -1) {
     return null;
@@ -59,8 +62,9 @@ export async function updateContact(contactId, data) {
   return contacts[index];
 }
 
-export async function deleteContact(contactId) {
-  const contacts = await getAllContacts();
+
+export async function removeContact(contactId) {
+  const contacts = await listContacts();
 
   const index = contacts.findIndex((item) => item.id === contactId);
   if (index === -1) {
