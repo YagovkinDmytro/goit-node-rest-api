@@ -24,11 +24,14 @@ export async function listContacts() {
   }
 }
 
+
 export async function getContactById(contactId) {
   const contacts = await listContacts();
+  
   const result = contacts.find((item) => item.id === contactId);
   return result || null;
 }
+
 
 export async function addContact(data) {
   const contacts = await listContacts();
@@ -58,6 +61,7 @@ export async function updateContact(contactId, data) {
 
   return contacts[index];
 }
+
 
 export async function removeContact(contactId) {
   const contacts = await listContacts();
