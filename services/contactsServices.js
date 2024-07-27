@@ -46,7 +46,7 @@ export async function updateContact(contactId, data) {
     return null;
   }
 
-  contacts[index] = { ...movies[index], ...data };
+  contacts[index] = { ...contacts[index], ...data };
 
   await updateContacts(contacts);
 
